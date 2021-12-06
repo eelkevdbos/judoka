@@ -55,17 +55,9 @@ class Hub(MultiCommand):
         if cmd_name not in self.list_commands(ctx):
             return None
 
-        try:
-            cmd_config = reduce(
-                operator.getitem,
-                cmd_name.split(":"),
-                self.config,
-            )
-        except KeyError:
-            cmd_config = []
-
-        if type(cmd_config) == list:
-            args = " ".join(cmd_config)
+        args = self.get_command_args(cmd_name)
+        if type(args) == list:
+            args = " ".join(args)
 
         @command(name=cmd_name)
         @argument("shell_args", nargs=-1)
@@ -78,3 +70,14 @@ class Hub(MultiCommand):
             process.kill()
 
         return _command
+
+    def get_command_args(self, cmd_name):
+        try:
+            args = reduce(
+                operator.getitem,
+                cmd_name.split(":"),
+                self.config,
+            )
+        except KeyError:
+            args = []
+        return args

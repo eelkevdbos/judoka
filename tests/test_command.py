@@ -25,3 +25,12 @@ def test_hub_is_configurable_via_configresolver_injection():
     expected_config = {"answer": "echo '42'"}
     hub = Hub(configresolver=lambda: expected_config)
     assert hub.config == expected_config
+
+
+def test_hub_builds_executable_shell_commands(capfd):
+    try:
+        Hub(config={"greet": "echo 'hi'"})(["greet"])
+    except SystemExit:
+        pass
+    out, _ = capfd.readouterr()
+    assert out == "hi\n"
