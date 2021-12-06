@@ -25,7 +25,7 @@ setup(
         "CI": "https://github.com/eelkevdbos/judoka/actions",
         "Changelog": "https://github.com/eelkevdbos/judoka/releases",
     },
-    license="Apache License, Version 2.0",
+    license="MIT",
     version=VERSION,
     packages=setuptools.find_packages("src"),
     package_dir={"": "src"},

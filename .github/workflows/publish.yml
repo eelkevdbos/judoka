@@ -16,7 +16,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-        cache: pip
     - name: Install dependencies
       run: |
         pip install -e ".[test]"
@@ -32,7 +31,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.9"
-        cache: pip
     - name: Install dependencies
       run: |
         pip install setuptools wheel twine build
