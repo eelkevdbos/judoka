@@ -20,7 +20,7 @@ def rc_installer(rc_file, completion_file):
 def path_installer(install_path, completion_file):
     install_path.mkdir(exist_ok=True)
 
-    with resources.path("completions") as path:
+    with resources.path("judoka", "completions") as path:
         copy(path / completion_file, install_path)
 
 
