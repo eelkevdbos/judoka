@@ -12,7 +12,7 @@ def rc_installer(rc_file, completion_file):
     judoka_homedir.mkdir(exist_ok=True)
 
     with resources.path("judoka.completions", completion_file) as path:
-        completion_target = copy(completion_file, judoka_homedir)
+        completion_target = copy(path, judoka_homedir)
 
     return f"echo 'source {completion_target}' >> {rc_file}"
 
@@ -21,7 +21,7 @@ def path_installer(install_path, completion_file):
     install_path.mkdir(exist_ok=True)
 
     with resources.path("judoka.completions", completion_file) as path:
-        copy(path / completion_file, install_path)
+        copy(path, install_path)
 
 
 installers = {
