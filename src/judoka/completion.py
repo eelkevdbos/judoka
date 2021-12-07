@@ -1,48 +1,44 @@
 import pathlib
 import subprocess
 from functools import partial
+from importlib import resources
 from shutil import copy
 
 import click
 
-from judoka import completions_path
 
-
-def rc_installer(rc_file, completion_source):
+def rc_installer(rc_file, completion_file):
     judoka_homedir = pathlib.Path("~/.judo").expanduser()
     judoka_homedir.mkdir(exist_ok=True)
 
-    completion_target = copy(
-        pathlib.Path(completions_path) / completion_source,
-        judoka_homedir,
-    )
+    with resources.path("judoka", "completions") as path:
+        completion_target = copy(path / completion_file, judoka_homedir)
 
     return f"echo 'source {completion_target}' >> {rc_file}"
 
 
-def path_installer(install_path, completion_source):
+def path_installer(install_path, completion_file):
     install_path.mkdir(exist_ok=True)
-    copy(
-        pathlib.Path(completions_path) / completion_source,
-        install_path,
-    )
+
+    with resources.path("completions") as path:
+        copy(path / completion_file, install_path)
 
 
 installers = {
     "bash": partial(
         rc_installer,
         rc_file=pathlib.Path("~/.bashrc").expanduser(),
-        completion_source="judo.bash",
+        completion_file="judo.bash",
     ),
     "zsh": partial(
         rc_installer,
         rc_file=pathlib.Path("~/.zshrc").expanduser(),
-        completion_source="judo.zsh",
+        completion_file="judo.zsh",
     ),
     "fish": partial(
         path_installer,
         install_path=pathlib.Path("~/.config/fish/completions/").expanduser(),
-        completion_source="judo.fish",
+        completion_file="judo.fish",
     ),
 }
 

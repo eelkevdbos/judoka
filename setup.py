@@ -2,7 +2,7 @@ import setuptools
 from setuptools import setup
 import os
 
-VERSION = "0.3"
+VERSION = "0.3.1"
 
 
 def get_long_description():
@@ -30,6 +30,7 @@ setup(
     packages=setuptools.find_packages("src"),
     include_package_data=True,
     package_dir={"": "src"},
+    package_data={"judoka": ["completions/*"]},
     entry_points={
         "console_scripts": [
             "judo=judoka.cli:hub",
