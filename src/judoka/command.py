@@ -3,6 +3,7 @@ import operator
 import subprocess
 import typing as t
 
+import click
 from click import (
     argument,
     command,
@@ -60,7 +61,7 @@ class Hub(MultiCommand):
             args = " ".join(args)
 
         @command(name=cmd_name)
-        @argument("shell_args", nargs=-1)
+        @argument("shell_args", nargs=-1, type=click.Path())
         def _command(shell_args):
             process = subprocess.Popen(
                 args + " " + " ".join(shell_args),
