@@ -10,6 +10,7 @@ from click import (
     Command,
     Context,
     MultiCommand,
+    pass_context,
 )
 
 
@@ -60,7 +61,10 @@ class Hub(MultiCommand):
         if type(args) == list:
             args = " ".join(args)
 
-        @command(name=cmd_name)
+        @command(
+            name=cmd_name,
+            context_settings=dict(ignore_unknown_options=True, allow_extra_args=True),
+        )
         @argument("shell_args", nargs=-1, type=click.Path())
         def _command(shell_args):
             process = subprocess.Popen(

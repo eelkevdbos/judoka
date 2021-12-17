@@ -2,7 +2,7 @@ import setuptools
 from setuptools import setup
 import os
 
-VERSION = "0.3.5"
+VERSION = "0.3.6"
 
 
 def get_long_description():
@@ -37,7 +37,7 @@ setup(
             "judo-completions=judoka.completion:install",
         ]
     },
-    install_requires=["toml", "click"],
+    install_requires=["toml~=0.10", "click~=8.0"],
     extras_require={"test": ["pytest"]},
     python_requires=">=3.6",
 )
